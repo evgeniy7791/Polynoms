@@ -14,6 +14,8 @@ set(MP2_INCLUDE "${CMAKE_CURRENT_SOURCE_DIR}/include")
 
 add_subdirectory(include)
 
+add_subdirectory(containers)
+
 if(BUILD_SAMPLES)
 	add_subdirectory(samples)
 endif()
