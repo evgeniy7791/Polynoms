@@ -1,31 +1,26 @@
-﻿// ННГУ, ИИТММ, Курс "Алгоритмы и структуры данных"
-//
-// Copyright (c) Сысоев А.В.
-//
-
-#include <cstdlib>
+﻿
 #include <iostream>
-#include <string>
-#include "expression_translator.h"
+#include "../containers/unordered_table.h"
 
-using namespace std;
-
-
-void main()
-{
-	parser parser;
-	string str;
-	char flag;
-	while (true) {
-		str = "";
-		flag = ' ';
-		cout << "type an expression, type = to end" << endl;
-		while (flag != '=') {
-			str += flag;
-			cin >> flag;
-		}
-		if (str == " ") return;
-		parser.setProblem(str);
-		cout << parser.getAnswer() << endl;
+int main() {
+	auto ut = UnorderedTable<std::string, int>();
+	ut.add({ "a", 1 });
+	ut.add("b", 2);
+	ut.add("c", 3);
+	ut.add("d", 4);
+	try {
+		ut.add("a", 3);
 	}
+	catch (std::logic_error e) {
+		std::cerr << e.what()<<std::endl;
+	}
+	ut.remove("a");
+
+	ut["c"] = 3888;
+
+	ut.print();
+	return 0;
+
+
+
 }
