@@ -105,8 +105,10 @@ public:
 		for (auto p : *this) {
 			out << " (key=" << p.first << "," << "value=" << p.second << "),";
 		}
-		out << "}";
-	
+		out << "}\n";
+	}
+	size_t size() {
+		return table.size();
 	}
 
 };
