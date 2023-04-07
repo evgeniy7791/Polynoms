@@ -16,7 +16,7 @@ private:
 		auto newTable = decltype(table)(table.size() * 2 + 1);
 		for (auto list : table) {
 			for (auto p : list) {
-				newTable[hash(p.first, newTable.size())].add(p);
+				newTable[hash(p.first, newTable.size())].insert(p);
 			} 
 		} 
 		table = newTable;
@@ -48,7 +48,7 @@ public:
 	}
 
 	void insert(K key, V val) {
-		table[hash(key)].add(std::pair<K, V>(key, val));
+		table[hash(key)].insert(std::pair<K, V>(key, val));
 		if (table[hash(key)].size() >= table.size()) {
 			resize();
 		}

@@ -36,14 +36,14 @@ public:
 		throw std::domain_error("Key not found");
 	}
 
-	void add(std::pair<K, V> p) {
+	void insert(std::pair<K, V> p) {
 		if (contains(p.first)) {
 			throw std::logic_error("Key already exists");
 		}
 		table.push_back(p);
 	}
 
-	void add(K key, V val) {
+	void insert(K key, V val) {
 		if (contains(key)) {
 			throw std::logic_error("Key already exists");
 		}
