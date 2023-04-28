@@ -1,4 +1,5 @@
-#pragma once
+#ifndef UNORDERED_TABLE_H
+#define UNORDERED_TABLE_H
 
 #include <iostream>
 #include <vector>
@@ -112,5 +113,7 @@ public:
 	}
 
 };
+
+#endif
 
 

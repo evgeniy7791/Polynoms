@@ -1,18 +1,20 @@
-﻿#include "monom.h"
+﻿#ifndef POLYNOM_H
+#define POLYNOM_H
+#include "monom.h"
 
 using namespace std;
 
 //const int minDeg = -1;
-//const int p = 25;
+//const int poni = 25;
 
 class Polinom
 {
 protected:
-    Node* head;
-    Node* end;
+    Unit* head;
+    Unit* end;
     void addlast(Monom _v)
     {
-        Node* n = new Node(_v, head);
+        Unit* n = new Unit(_v, head);
         end->next = n;
         end = n;
     }
@@ -21,7 +23,7 @@ protected:
     {
         while (head->next != head)
         {
-            Node* d = head->next;
+            Unit* d = head->next;
             head->next = head->next->next;
             delete d;
         }
@@ -31,17 +33,17 @@ protected:
 public:
     Polinom()
     {
-        head = new Node();
+        head = new Unit();
         head->next = head;
         end = head;
     }
 
     Polinom(const Polinom& l)
     {
-        head = new Node();
+        head = new Unit();
         head->next = head;
         end = head;
-        Node* tmp = l.head->next;
+        Unit* tmp = l.head->next;
         while (tmp != l.head)
         {
             addlast(tmp->val);
@@ -54,7 +56,7 @@ public:
         if (this == &l)
             return *this;
         clear();
-        Node* tmp = l.head->next;
+        Unit* tmp = l.head->next;
         while (tmp != l.head)
         {
             addlast(tmp->val);
@@ -69,7 +71,7 @@ public:
     {
         while (head->next != head)
         {
-            Node* d = head->next;
+            Unit* d = head->next;
             head->next = head->next->next;
             delete d;
         }
@@ -77,7 +79,7 @@ public:
 
     void add(Monom m)
     {
-        Node* tmp = head;
+        Unit* tmp = head;
         while (tmp->next != head)
         {
             if (tmp->next->val.pow == m.pow)
@@ -87,7 +89,7 @@ public:
             }
             if (tmp->next->val.pow > m.pow)
             {
-                Node* n = new Node(m, tmp->next);
+                Unit* n = new Unit(m, tmp->next);
                 tmp->next = n;
                 return;
             }
@@ -99,26 +101,26 @@ public:
     Polinom operator+(const Polinom& poly)
     {
         Polinom res;
-        Node* t = head->next;
-        Node* p = poly.head->next;
-        while (t != head && p != poly.head)
+        Unit* t = head->next;
+        Unit* poni = poly.head->next;
+        while (t != head && poni != poly.head)
         {
-            if (t->val.pow == p->val.pow)
+            if (t->val.pow == poni->val.pow)
             {
-                if (t->val.mult + p->val.mult != 0)
-                    res.addlast(t->val + p->val);
+                if (t->val.mult + poni->val.mult != 0)
+                    res.addlast(t->val + poni->val);
                 t = t->next;
-                p = p->next;
+                poni = poni->next;
             }
-            else if (t->val.pow < p->val.pow)
+            else if (t->val.pow < poni->val.pow)
             {
                 res.addlast(t->val);
                 t = t->next;
             }
             else
             {
-                res.addlast(p->val);
-                p = p->next;
+                res.addlast(poni->val);
+                poni = poni->next;
             }
         }
         while (t != head)
@@ -126,10 +128,10 @@ public:
             res.addlast(t->val);
             t = t->next;
         }
-        while (p != poly.head)
+        while (poni != poly.head)
         {
-            res.addlast(p->val);
-            p = p->next;
+            res.addlast(poni->val);
+            poni = poni->next;
         }
         return res;
     }
@@ -137,26 +139,26 @@ public:
     Polinom operator-(const Polinom& poly)
     {
         Polinom res;
-        Node* t = head->next;
-        Node* p = poly.head->next;
-        while (t != head && p != poly.head)
+        Unit* t = head->next;
+        Unit* poni = poly.head->next;
+        while (t != head && poni != poly.head)
         {
-            if (t->val.pow == p->val.pow)
+            if (t->val.pow == poni->val.pow)
             {
-                if (t->val.mult - p->val.mult != 0)
-                    res.addlast(t->val - p->val);
+                if (t->val.mult - poni->val.mult != 0)
+                    res.addlast(t->val - poni->val);
                 t = t->next;
-                p = p->next;
+                poni = poni->next;
             }
-            else if (t->val.pow < p->val.pow)
+            else if (t->val.pow < poni->val.pow)
             {
                 res.addlast(t->val);
                 t = t->next;
             }
             else
             {
-                res.addlast(-(p->val));
-                p = p->next;
+                res.addlast(-(poni->val));
+                poni = poni->next;
             }
         }
         while (t != head)
@@ -164,10 +166,10 @@ public:
             res.addlast(t->val);
             t = t->next;
         }
-        while (p != poly.head)
+        while (poni != poly.head)
         {
-            res.addlast(-(p->val));
-            p = p->next;
+            res.addlast(-(poni->val));
+            poni = poni->next;
         }
         return res;
     }
@@ -175,17 +177,17 @@ public:
     Polinom operator*(const Polinom& poly)
     {
         Polinom res;
-        Node* t = head->next;
-        Node* p = poly.head->next;
+        Unit* t = head->next;
+        Unit* poni = poly.head->next;
         while (t != head)
         {
-            while (p != poly.head)
+            while (poni != poly.head)
             {
-                res.add(t->val * p->val);
-                p = p->next;
+                res.add(t->val * poni->val);
+                poni = poni->next;
             }
             t = t->next;
-            p = poly.head->next;
+            poni = poly.head->next;
         }
         return res;
     }
@@ -193,17 +195,17 @@ public:
     Polinom operator/(const Polinom& poly)
     {
         Polinom res;
-        Node* t = head->next;
-        Node* p = poly.head->next;
+        Unit* t = head->next;
+        Unit* poni = poly.head->next;
         while (t != head)
         {
-            while (p != poly.head)
+            while (poni != poly.head)
             {
-                res.add(t->val / p->val);
-                p = p->next;
+                res.add(t->val / poni->val);
+                poni = poni->next;
             }
             t = t->next;
-            p = poly.head->next;
+            poni = poly.head->next;
         }
         return res;
     }
@@ -211,7 +213,7 @@ public:
     double calc(double x = 1.0, double y = 1.0, double z = 1.0)
     {
         double res = 0;
-        Node* tmp = head->next;
+        Unit* tmp = head->next;
         while (tmp != head)
         {
             res += tmp->val.calc(x, y, z);
@@ -222,7 +224,7 @@ public:
 
     friend ostream& operator<<(ostream& out, Polinom& poli)
     {
-        Node* tmp = poli.head->next;
+        Unit* tmp = poli.head->next;
         while (tmp->next != poli.head)
         {
             out << tmp->val << " + ";
@@ -260,3 +262,5 @@ public:
         return in;
     }
 };
+
+#endif

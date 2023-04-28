@@ -1,4 +1,7 @@
-﻿#include <iostream>
+﻿#pragma once
+#ifndef MONOM_H
+#define MONOM_H
+#include <iostream>
 #include <fstream>
 #include <sstream>
 #include <string>
@@ -6,8 +9,10 @@
 
 using namespace std;
 
+
+
 const int minDeg = -1;
-const int p = 25;
+const int poni = 25;
 
 //x - 0
 //y - 1
@@ -17,8 +22,8 @@ int control(int a)
 {
     if (a < minDeg)
         return minDeg;
-    if (a > minDeg + p - 1)
-        return minDeg + p - 1;
+    if (a > minDeg + poni - 1)
+        return minDeg + poni - 1;
     return a;
 }
 
@@ -30,16 +35,16 @@ public:
     Monom(double m = 1.0, int x = 0, int y = 0, int z = 0)
     {
         mult = m;
-        pow = (x - minDeg) + (y - minDeg) * p + (z - minDeg) * p * p;
+        pow = (x - minDeg) + (y - minDeg) * poni + (z - minDeg) * poni * poni;
     }
 
-    int getX() { return pow % p + minDeg; }
-    int getY() { return (pow / p) % p + minDeg; }
-    int getZ() { return pow / p / p + minDeg; }
+    int getX() { return pow % poni + minDeg; }
+    int getY() { return (pow / poni) % poni + minDeg; }
+    int getZ() { return pow / poni / poni + minDeg; }
 
     void clear()
     {
-        mult = 1.0; pow = -minDeg + -minDeg * p + -minDeg * p * p;
+        mult = 1.0; pow = -minDeg + -minDeg * poni + -minDeg * poni * poni;
     }
 
     Monom operator-()
@@ -124,7 +129,7 @@ public:
                     t = stoi(tmp, 0, 10);
                     while (st - 1)
                     {
-                        t *= p;
+                        t *= poni;
                         st--;
                     }
                     m.pow += t;
@@ -149,7 +154,7 @@ public:
             t = stoi(tmp, 0, 10);
             while (st - 1 > 0)
             {
-                t *= p;
+                t *= poni;
                 st--;
             }
             m.pow += t;
@@ -159,13 +164,15 @@ public:
 };
 
 
-struct Node
+struct Unit 
 {
     Monom val;
-    Node* next;
-    Node(Monom _v = Monom(), Node* l = nullptr)
+    Unit* next;
+    Unit(Monom _v = Monom(), Unit* l = nullptr)
     {
         val = _v;
         next = l;
     }
 };
+
+#endif 

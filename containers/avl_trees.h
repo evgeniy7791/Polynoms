@@ -1,5 +1,6 @@
 
-#pragma once
+#ifndef AVL_TREES_H
+#define AVL_TREES_H
 
 #include <iostream>
 #include <vector>
@@ -35,6 +36,13 @@ private:
 
 	void fix_height(Node<K, V>* node) {
 		node->height = std::max(get_h_node(node->right), get_h_node(node->left)) + 1;
+	}
+
+	int count_nodes(const Node<K, V>* node) const {
+		if (!node) {
+			return 0;
+		}
+		return 1 + count_nodes(node->left) + count_nodes(node->right);
 	}
 
 	Node<K, V>* rotate_left(Node<K, V>* dad) {
@@ -202,4 +210,10 @@ public:
 		print_node(root, 0);
 	}
 
+	int size() const {
+		return count_nodes(root);
+	}
+
 };
+
+#endif
