@@ -1,4 +1,5 @@
-﻿#pragma once
+﻿#ifndef METHOD_CHAIN_H
+#define METHOD_CHAIN_H
 
 #include <iostream>
 #include <vector>
@@ -73,5 +74,5 @@ public:
 	}
 };
 
-
+#endif
 
