@@ -1,106 +1,393 @@
-﻿
-#include <iostream>
+﻿#include <iostream>
+
 #include "../containers/unordered_table.h"
+
 #include "../containers/ordered_table.h"
+
 #include "../containers/method_chain.h"
+
 #include "../containers/open_adress.h"
-#include "../containers/avl_trees.h" 
-#include "../containers/red_black_trees.h" 
+
+#include "../containers/avl_trees.h"
+
+#include "../containers/red_black_trees.h"
+
 #include "polynom.h"
+
+using namespace std;
+
+
+
+
+
+
+
+
+
+int menu1()
+
+{
+
+    cout<< "Select date structure to store polinoms:" << "\n";
+
+    cout<< "1.Unordered Table" << "\n";
+
+    cout<< "2.Ordered Table" << "\n";
+
+    cout<< "3.Avl Tree" << "\n";
+
+    cout<< "4.Red and black tree" << "\n";
+
+    cout<< "5.Hash table with open adress" << "\n";
+
+    cout << "6.Hash table with chains" << "\n";
+
+    int a;
+
+    cin >> a;
+
+    return a;
+
+}
+
+TABLE<int, Polinom>* CreateTable(int a)
+
+{
+
+    switch (a) {
+
+    case 1:
+
+        return new UnorderedTable<int, Polinom>();
+
+    case 2:
+
+        return new OrderedTable<int, Polinom>();
+
+    case 3:
+
+        return new AVLTree<int, Polinom>();
+
+    case 4:
+
+        return new RedBlackTree<int, Polinom>();
+
+    case 5:
+
+        return new HashTable2<int, Polinom>();
+
+    case 6:
+
+        return new HashTable<int, Polinom>();
+
+
+
+
+
+    default:
+
+        std::cout << "Incorrect table type" << "\n";
+
+        return nullptr;
+
+    }
+
+}
+
+
+
+void menu2(TABLE<int, Polinom>* tab)
+
+{
+
+    Monom m1;
+
+    Polinom p;
+
+    while (true)
+
+    {
+
+        cout << "1.Add monom to polinom:" << "\n";
+
+        cout << "2.Add polinom to table:" << "\n";
+
+        cout << "3.Exit create polinoms:" << "\n";
+
+        int ex;
+
+        cin >> ex;
+
+        if (ex == 3)
+
+        {
+
+            cout << "Completed add polinoms to table" << "\n";
+
+            break;
+
+        }
+
+        switch (ex) {
+
+        case 1:
+
+            cout << "Input monom coefficients:" << "\n";
+
+            double m;
+
+            int x, y, z;
+
+            cin >> m >> x >> y >> z;
+
+            m1 = Monom(m, x, y, z);
+
+            p.add(m1);
+
+            break;
+
+        case 2:
+
+            int K;
+
+            cout << "Input key to add polinom into table:" << "\n";
+
+            cin >> K;
+
+            tab->insert(K, p);
+
+            p.clear();
+
+            break;
+
+        default:
+
+            cout << "Incorrect command number" << "\n";
+
+        }
+
+
+
+    }
+    
+}
+
+
+
+void menu3(TABLE<int, Polinom>* tab)
+
+{
+
+    int k1, k2, K;
+
+    double res;
+
+    int x, y, z;
+
+    Polinom p1, p2, p3;
+
+
+
+    while (true)
+
+    {
+
+        cout << "1.Add(+) polinoms:" << "\n";
+
+        cout << "2.Minus(-) polinoms:" << "\n";
+
+        cout << "3.Mult(*) polinoms:" << "\n";
+
+        cout << "4.Div(/) polinoms:" << "\n";
+
+        cout << "5.Calculate polinom value:" << "\n";
+
+        cout << "6.Exit polinoms operations:" << "\n";
+
+
+
+        int ex;
+
+        cin >> ex;
+
+        if (ex == 6)
+
+        {
+
+            cout << "Completed polinoms operations" << "\n";
+
+            break;
+
+        }
+
+        switch (ex) {
+
+        case 1:
+
+
+
+            cout << "Input key for polinom1:" << "\n";
+
+            cin >> k1;
+
+            cout << "Input key for polinom2:" << "\n";
+
+            cin >> k2;
+
+            p1 = tab->operator[](k1);
+
+            p2 = tab->operator[](k2);
+
+            p3 = p1 + p2;
+
+
+
+            cout << "Input key to add sum of polinoms into table:" << "\n";
+
+            cin >> K;
+
+            tab->insert(K, p3);
+
+            break;
+
+        case 2:
+
+
+
+            cout << "Input key for polinom1:" << "\n";
+
+            cin >> k1;
+
+            cout << "Input key for polinom2:" << "\n";
+
+            cin >> k2;
+
+            p1 = tab->operator[](k1);
+
+            p2 = tab->operator[](k2);
+
+            p3 = p1 - p2;
+
+
+
+            cout << "Input key to add differense of polinoms into table:" << "\n";
+
+            cin >> K;
+
+            tab->insert(K, p3);
+
+            break;
+
+        case 3:
+
+
+
+            cout << "Input key for polinom1:" << "\n";
+
+            cin >> k1;
+
+            cout << "Input key for polinom2:" << "\n";
+
+            cin >> k2;
+
+            p1 = tab->operator[](k1);
+
+            p2 = tab->operator[](k2);
+
+            p3 = p1 * p2;
+
+
+
+            cout << "Input key to add product of polinoms into table:" << "\n";
+
+            cin >> K;
+
+            tab->insert(K, p3);
+
+            break;
+
+        case 4:
+
+
+
+            cout << "Input key for polinom1:" << "\n";
+
+            cin >> k1;
+
+            cout << "Input key for polinom2:" << "\n";
+
+            cin >> k2;
+
+            p1 = tab->operator[](k1);
+
+            p2 = tab->operator[](k2);
+
+            p3 = p1 / p2;
+
+
+
+            cout << "Input key to add quotient of division of polinoms into table:" << "\n";
+
+            cin >> K;
+
+            tab->insert(K, p3);
+
+            break;
+
+        case 5:
+
+
+
+            cout << "Input key to calculate polinpm value:" << "\n";
+
+            cin >> K;
+
+            p1 = tab->operator[](K);
+
+
+
+            cout << "Input values to X, Y, Z:" << "\n";
+
+            cin >> x >> y >> z;
+
+            res = p1.calc(x, y, z);
+
+            cout << "RESULT CALC: " << res << "\n";
+
+
+
+        default:
+
+            cout << "Incorrect command number" << "\n";
+
+
+
+        }
+
+    }
+
+}
 
 
 
 int main() {
-	/*auto ut = UnorderedTable<std::string, int>();
-	ut.add({ "a", 1 });
-	ut.add("b", 2);
-	ut.add("c", 3);
-	ut.add("d", 4);
-	try {
-		ut.add("a", 3);
-	}
-	catch (std::logic_error e) {
-		std::cerr << e.what()<<std::endl;
-	}
-	ut.remove("a");
-
-	ut["c"] = 3888;
-
-	ut.print();*/
-
-	
-	
-	/*AVLTree<int, int> tree;
-	for (int i = 0; i < 7; ++i) {
-		tree.insert(i * (int)pow(-1, i), i);
-	}
-	    tree.print();
-	AVLTree<int, int> tree2(tree);
-	tree2.remove(0);
-	tree2.insert(5, 9);
-	tree2.print();
-	std::cout << tree.find(-3);
-	tree.print();
-	return 0;*/
 
 
 
+    int a = menu1();
 
-	/*auto ut = HashTable<std::string, int>();
-	ut.insert({ "a", 1 });
-	ut.insert("b", 2);
-	ut.insert("c", 3);
-	ut.print();
-	ut.insert("d", 4);
-	try {
-		ut.insert("a", 3);
-	}
-	catch (std::logic_error e) {
-		std::cerr << e.what() << std::endl;
-	}
-	ut.print();
-	ut.remove("a");
+    TABLE<int, Polinom>* tab = CreateTable(a);
 
-	ut["c"] = 3888;
+    menu2(tab);
 
-	ut.print();*/
-
-	/*HashTable <int, Polinom> f;
-	Monom m1(2, 3, 1, 1);
-	Monom m2(4, 3, 1, 1);
-	Polinom p1,p2;
-	p1.add(m1);
-	p2.add(m2);
-	cout << p1;
-	f.insert(1, p1);
-	f.insert(5, p2);
-	f.print();
+    tab->print();
 
 
-	OrderedTable<int, int> ot;
-	for (int i = 0; i < 7; ++i) 
-	{
-		ot.insert(i * (int)pow(-1, i), i);
-	}
-	ot.remove(-3);
-	ot.print();*/
-	
 
-	/*HashTable2<int, int> opad;
-	for (int i = 0; i < 18; ++i)
-	{
-		opad.insert(i * (int)pow(-1, i), i);
-	}
-	opad.remove(-3);
-	opad.insert(4,100);
-	
-	opad.print();*/
+    menu3(tab);
 
-	RedBlackTree<int, int> rb;
-	for (int i = 0; i < 7; ++i) {
-		rb.insert(i * (int)pow(-1, i), i);
-	}
-	rb.print();
+    tab->print();
 
+    return 0;
 
 }
