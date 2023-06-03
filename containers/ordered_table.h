@@ -1,3 +1,4 @@
+
 #ifndef ORDERED_TABLE_H
 
 #define ORDERED_TABLE_H
@@ -7,7 +8,7 @@
 #include "polynom.h"
 
 #include <vector>
-
+#include<string>
 
 
 template<typename Key, typename Value>
@@ -34,7 +35,7 @@ public:
 
 
 
-    Value* find(const Key& key) {
+    /*Value* find(const Key& key) {
 
         for (auto& p : Otable) {
 
@@ -50,7 +51,22 @@ public:
 
     }
 
-
+    */
+    Value* find(const Key& key) {
+        bool flag = false;
+        int l = 0;
+        int r = Otable.size();
+        int mid;
+        while (l <= r && flag != true)
+        {
+            mid = (l + r) / 2;
+            if (Otable[mid].first == key)
+                return &Otable[mid].second;
+            if (Otable[mid].first > key) r = mid - 1;
+            else l = mid + 1;
+        }
+        return nullptr;
+    }
 
     void remove(Key key) {
 
@@ -160,7 +176,7 @@ public:
 
             std::cout << elem.first << ", ";
 
-            std::cout << elem.second.toString() << std::endl;
+            std::cout << elem.second/*.toString()*/ << std::endl;
 
 
 

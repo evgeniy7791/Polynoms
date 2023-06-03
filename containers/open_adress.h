@@ -12,7 +12,7 @@
 
 #include <cmath>
 
-
+#include <polynom.h>
 
 #include <iostream>
 
@@ -96,7 +96,7 @@ public:
 
         }
 
-        table[i] = std::pair<int, Polinom>(key, value);
+        table[i] = std::pair<Key, Value>(key, value);
 
         size++;
 
@@ -172,7 +172,7 @@ public:
 
         int i = hash(key);
 
-        while (table[i].first != empty/*Key{}*/) {
+        while (table[i].first != /*empty*/Key{}) {
 
             if (table[i].first == key) {
 
@@ -184,7 +184,7 @@ public:
 
         }
 
-        insert(key, Polinom() /*Value{}*/);
+        insert(key, /*Polinom()*/ Value{});
 
         return table[hash(key)].second;
 
@@ -196,9 +196,9 @@ public:
 
         for (const auto& p : table) {
 
-            if (p.first != empty/*Key{}*/) {
+            if (p.first != Key{}) {
 
-                std::cout << "Key: " << p.first << ", Value: " << p.second.toString() << std::endl;
+                std::cout << "Key: " << p.first << ", Value: " <<p.second/*.toString()*/ << std::endl;
 
             }
 
@@ -215,3 +215,4 @@ public:
 
 
 #endif
+
