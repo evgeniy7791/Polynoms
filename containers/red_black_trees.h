@@ -303,21 +303,15 @@ void RedBlackTree<Key, Value>::remove(Node*& node, const Key& key) {
     }
 
     else {
-
         // Åñëè óçåë èìååò òîëüêî îäíîãî ïîòîìêà, çàìåíÿåì åãî íà ýòîãî ïîòîìêà
 
         if (!node->left) {
-
             Node* temp = node;
-
             node = node->right;
-
             temp->right = nullptr;
-
             delete temp;
 
             --count;
-
         }
 
         else if (!node->right) {
@@ -333,7 +327,6 @@ void RedBlackTree<Key, Value>::remove(Node*& node, const Key& key) {
             --count;
 
         }
-
         else {
 
             // Åñëè óçåë èìååò îáîèõ ïîòîìêîâ, çàìåíÿåì åãî íà ìèíèìàëüíûé ýëåìåíò â ïðàâîì ïîääåðåâå
@@ -343,20 +336,14 @@ void RedBlackTree<Key, Value>::remove(Node*& node, const Key& key) {
             while (minNode->left) {
 
                 minNode = minNode->left;
-
             }
 
             node->key = minNode->key;
-
             node->value = minNode->value;
-
             remove(node->right, minNode->key);
 
         }
-
     }
-
-
 
     // Ïðîâåðÿåì è èñïðàâëÿåì íàðóøåíèÿ ñâîéñòâ êðàñíî-÷åðíîãî äåðåâà
 
@@ -380,8 +367,6 @@ void RedBlackTree<Key, Value>::remove(Node*& node, const Key& key) {
 
 }
 
-
-
 template<typename Key, typename Value>
 
 bool RedBlackTree<Key, Value>::find(const Key& key) const {
@@ -389,8 +374,6 @@ bool RedBlackTree<Key, Value>::find(const Key& key) const {
     return find(root, key) != nullptr;
 
 }
-
-
 
 template<typename Key, typename Value>
 
@@ -402,8 +385,6 @@ void RedBlackTree<Key, Value>::insert(const Key& key, const Value& value) {
 
 }
 
-
-
 template<typename Key, typename Value>
 
 void RedBlackTree<Key, Value>::remove(const Key& key) {
@@ -413,11 +394,7 @@ void RedBlackTree<Key, Value>::remove(const Key& key) {
     if (root != nullptr)
 
         root->color = BLACK;
-
 }
-
-
-
 
 
 template<typename Key, typename Value>
@@ -437,13 +414,4 @@ Value& RedBlackTree<Key, Value>::operator[](const Key& key) {
     return node->value;
 
 }
-
-
-
-
-
-
-
-
-
 #endif

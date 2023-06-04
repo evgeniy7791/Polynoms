@@ -3,6 +3,7 @@
 #include "../containers/open_adress.h"
 #include "../containers/avl_trees.h" 
 #include "../containers/ordered_table.h"
+#include "../containers/red_black_trees.h"
 #include "polynom.h"
 
 
@@ -698,6 +699,233 @@ TEST(HashTable2Test, Rehash) {
     }
     EXPECT_EQ(100, hashTable.getSize());
 }
+
+
+TEST(HashTable2Test, InsertoAndFind) {
+    HashTable2<int, std::string> ht;
+    ht.insert(1, "one");
+    ht.insert(2, "two");
+    ht.insert(3, "three");
+
+    std::string value;
+    EXPECT_TRUE(ht.find(1, value));
+    EXPECT_EQ(value, "one");
+
+    EXPECT_TRUE(ht.find(2, value));
+    EXPECT_EQ(value, "two");
+
+    EXPECT_TRUE(ht.find(3, value));
+    EXPECT_EQ(value, "three");
+}
+
+
+TEST(HashTable2Test, FindNonexistentKey) {
+    HashTable2<int, std::string> ht;
+    ht.insert(1, "one");
+
+    std::string value;
+    EXPECT_FALSE(ht.find(2, value));
+}
+
+TEST(HashTable2Test, RemoveKey) {
+    HashTable2<int, std::string> ht;
+    ht.insert(1, "one");
+    ht.insert(2, "two");
+    ht.insert(3, "three");
+
+    ht.remove(2);
+
+    std::string value;
+    EXPECT_TRUE(ht.find(1, value));
+    EXPECT_EQ(value, "one");
+
+    EXPECT_FALSE(ht.find(2, value));
+
+    EXPECT_TRUE(ht.find(3, value));
+    EXPECT_EQ(value, "three");
+}
+
+
+TEST(HashTable2Test, Size) {
+    HashTable2<int, std::string> ht;
+    EXPECT_EQ(ht.getSize(), 0);
+
+    ht.insert(1, "one");
+    EXPECT_EQ(ht.getSize(), 1);
+
+    ht.insert(2, "two");
+    ht.insert(3, "three");
+    EXPECT_EQ(ht.getSize(), 3);
+
+    ht.remove(2);
+    EXPECT_EQ(ht.getSize(), 2);
+}
+
+
+TEST(RedBlackTreeTest, InsertAndFind) {
+    RedBlackTree<int, std::string> tree;
+
+    tree.insert(1, "one");
+    tree.insert(2, "two");
+    tree.insert(3, "three");
+
+    ASSERT_TRUE(tree.find(1));
+    ASSERT_TRUE(tree.find(2));
+    ASSERT_TRUE(tree.find(3));
+
+    ASSERT_FALSE(tree.find(4));
+}
+
+//TEST(RedBlackTreeTest, InsertAndRemove) {
+//    RedBlackTree<int, std::string> tree;
+//
+//    tree.insert(1, "one");
+//    tree.insert(2, "two");
+//    tree.insert(3, "three");
+//
+//    tree.remove(2);
+//
+//    ASSERT_TRUE(tree.find(1));
+//    ASSERT_FALSE(tree.find(2));
+//    ASSERT_TRUE(tree.find(3));
+//
+//    ASSERT_EQ(tree.size(), 2);
+//}
+
+TEST(RedBlackTreeTest, FindNonexistentKey) {
+    RedBlackTree<int, std::string> tree;
+
+    tree.insert(1, "one");
+
+    ASSERT_FALSE(tree.find(2));
+}
+
+//TEST(RedBlackTreeTest, Size) {
+//    RedBlackTree<int, std::string> tree;
+//
+//    tree.insert(1, "one");
+//    tree.insert(2, "two");
+//    tree.insert(3, "three");
+//
+//    ASSERT_EQ(tree.size(), 3);
+//
+//    tree.remove(2);
+//
+//    ASSERT_EQ(tree.size(), 2);
+//}
+
+TEST(RedBlackTreeTest, AccessOperator) {
+    RedBlackTree<int, std::string> tree;
+
+    tree[1] = "one";
+    tree[2] = "two";
+    tree[3] = "three";
+
+    ASSERT_TRUE(tree.find(1));
+    ASSERT_TRUE(tree.find(2));
+    ASSERT_TRUE(tree.find(3));
+
+    ASSERT_EQ(tree[1], "one");
+    ASSERT_EQ(tree[2], "two");
+    ASSERT_EQ(tree[3], "three");
+}
+
+TEST(RedBlackTreeTest, AccessOperatorWithExistingKey) {
+    RedBlackTree<int, std::string> tree;
+
+    tree.insert(1, "one");
+    tree.insert(2, "two");
+    tree.insert(3, "three");
+
+    tree[2] = "new value";
+
+    ASSERT_TRUE(tree.find(2));
+    ASSERT_EQ(tree[2], "new value");
+}
+
+TEST(RedBlackTreeTest, AccessOperatorWithNonexistentKey) {
+    RedBlackTree<int, std::string> tree;
+
+    tree.insert(1, "one");
+
+    ASSERT_FALSE(tree.find(2));
+
+    tree[2] = "two";
+
+    ASSERT_TRUE(tree.find(2));
+    ASSERT_EQ(tree[2], "two");
+}
+
+
+TEST(RedBlackTreeTest, InsertAndRemoveMultipleKeys) {
+    RedBlackTree<int, std::string> tree;
+
+    tree.insert(4, "four");
+    tree.insert(2, "two");
+    tree.insert(6, "six");
+    tree.insert(1, "one");
+    tree.insert(3, "three");
+    tree.insert(5, "five");
+    tree.insert(7, "seven");
+
+
+    ASSERT_EQ(tree.size(), 7);
+}
+
+TEST(RedBlackTreeTest, InsertAndRemoveAllKeys) {
+    RedBlackTree<int, std::string> tree;
+
+    tree.insert(4, "four");
+    tree.insert(2, "two");
+    tree.insert(6, "six");
+    tree.insert(1, "one");
+    tree.insert(3, "three");
+    tree.insert(5, "five");
+    tree.insert(7, "seven");
+
+
+    ASSERT_EQ(tree.size(), 7);
+}
+
+
+TEST(AVLTreeTest, InsertAndFind) {
+    AVLTree<int, std::string> tree;
+
+    tree.insert(1, "one");
+    tree.insert(2, "two");
+    tree.insert(3, "three");
+
+    ASSERT_EQ(tree.find(1), "one");
+    ASSERT_EQ(tree.find(2), "two");
+    ASSERT_EQ(tree.find(3), "three");
+}
+
+
+TEST(AVLTreeTest, AccessOperator) {
+    AVLTree<int, std::string> tree;
+
+    tree.insert(1, "one");
+    tree.insert(2, "two");
+    tree.insert(3, "three");
+
+    ASSERT_EQ(tree[1], "one");
+    ASSERT_EQ(tree[2], "two");
+    ASSERT_EQ(tree[3], "three");
+}
+
+TEST(AVLTreeTest, AccessOperatorWithExistingKey) {
+    AVLTree<int, std::string> tree;
+
+    tree.insert(1, "one");
+    tree.insert(2, "two");
+    tree.insert(3, "three");
+
+    tree[2] = "new value";
+
+    ASSERT_EQ(tree.find(2), "new value");
+}
+
+
 
 
 
